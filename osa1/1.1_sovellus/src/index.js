@@ -40,7 +40,6 @@ const Part = (props) => {
   }
 
 const Total = (props) => {
-  console.log("tee", props, props.course.parts[0].exercises )
     return (
       <div>
         <p>

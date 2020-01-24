@@ -18,9 +18,33 @@ const Button = (props) => {
 const Header = (props) => {
   return (
     <div>
-      <h1>
+      <h2>
         {props.text}
-      </h1>
+      </h2>
+    </div>
+  )
+}
+
+const Total = (props) => {
+  return (
+    <div>
+      all {props.good + props.neutral + props.bad}
+    </div>
+  )
+}
+
+const Average = (props) => {
+  return (
+    <div>
+      average {(props.good-props.bad)/(props.good + props.neutral + props.bad)}
+    </div>
+  )
+}
+
+const Positive = (props) => {
+  return (
+    <div>
+      positive {props.good/(props.good + props.neutral + props.bad)} %
     </div>
   )
 }
@@ -55,11 +79,11 @@ const App = () => {
       />
       <Header text={stats} />
       <Display counter={good} name='good'/>
-      
       <Display counter={neutral} name='neutral'/>
-      
       <Display counter={bad} name='bad'/>
-      
+      <Total good={good} neutral={neutral} bad={bad}/>
+      <Average good={good} neutral={neutral} bad={bad}/>
+      <Positive good={good} neutral={neutral} bad={bad}/>
              
     </div>
   )
