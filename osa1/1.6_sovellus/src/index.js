@@ -93,6 +93,7 @@ const App = () => {
       <Header text={stats} />
       <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
+    
   )
 }
 
