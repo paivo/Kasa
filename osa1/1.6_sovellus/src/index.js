@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Display = (props) => {
-  return (
-  <div>{props.name} {props.counter}</div>
-  )
-}
 
 const Button = (props) => {
   return (
@@ -25,39 +20,37 @@ const Header = (props) => {
   )
 }
 
-const Total = (props) => {
+const StatisticLine = ({text, value}) => {
   return (
-    <div>
-      all {props.good + props.neutral + props.bad}
-    </div>
-  )
-}
-
-const Average = (props) => {
-  return (
-    <div>
-      average {(props.good-props.bad)/(props.good + props.neutral + props.bad)}
-    </div>
-  )
-}
-
-const Positive = (props) => {
-  return (
-    <div>
-      positive {props.good/(props.good + props.neutral + props.bad)} %
-    </div>
+    <tr>
+      <td>
+        {text} {value}
+      </td>
+    </tr>
   )
 }
 
 const Statistics = (props) => {
+  const all = props.good + props.neutral + props.bad
+  if (all === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
   return (
     <div>
-      good {props.good}<br></br>
-      neutral {props.neutral}<br></br>
-      bad {props.bad}<br></br>
-      all {props.good + props.neutral + props.bad}<br></br>
-      average {(props.good-props.bad)/(props.good + props.neutral + props.bad)}<br></br>
-      positive {100*props.good/(props.good + props.neutral + props.bad)} %
+      <table>
+        <tbody>
+          <StatisticLine text="good" value ={props.good} />
+          <StatisticLine text="neutral" value ={props.neutral} />
+          <StatisticLine text="bad" value ={props.bad} />
+          <StatisticLine text="all" value ={all} />
+          <StatisticLine text="average" value ={(props.good-props.bad)/all} />
+          <StatisticLine text="positive" value ={100*props.good/all + ' %'} />
+        </tbody>
+      </table>
     </div>
     )
 }
@@ -67,11 +60,9 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-
   const increaseByOneGood = () => setGood(good + 1)
   const increaseByOneNeutral = () => setNeutral(neutral + 1)
   const increaseByOneBad = () => setBad(bad + 1)
-
   const feedback = 'give feedback'
   const stats = 'statistics'
 
