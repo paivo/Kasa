@@ -126,13 +126,11 @@ const App = (props) => {
      
   const feedback = 'give feedback'
   const stats = 'statistics'
-
-  const increaseVote  = () => {
-    
-  }
+  const anecdoteoftheday = 'Anecdote of the day'
 
   return (
     <div>
+      <Header text={anecdoteoftheday} />
       {props.anecdotes[rand]}<br></br>
       <Vote one={one} two={two} tre={tre} four={four} five={five} six={six} which = {rand}/>
       <VoteButton o={increaseByOneOne} t={increaseByOneTwo} tr={increaseByOneTre} f={increaseByOneFour} fi={increaseByOneFive} s={increaseByOneSix} which = {rand}/>
