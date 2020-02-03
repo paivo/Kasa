@@ -38,12 +38,6 @@ const App = () => {
     personService.update(id, changedPerson).then(response => {
       setPersons(persons.map(pers => pers.id !== id ? pers : response.data))
     })
-    setErrorMessage(
-      `Changed ${person.name}s number`
-    )
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 5000)  
   }
 
   const addPerson = (event) => {
@@ -52,6 +46,12 @@ const App = () => {
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         const currentId = persons.find(n => n.name === newName).id
         changeNumber(currentId, newNumber)
+        setErrorMessage(
+          `Changed ${newName}s number`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)          
       } else {
           event.preventDefault()
       }
