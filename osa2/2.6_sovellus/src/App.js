@@ -16,9 +16,11 @@ const App = () => {
       })
   }, [])
 
-  const removePerson = (id) => {
-    personService.remove(id)
-    setPersons(persons.filter(person => person.id !== id))
+  const removePerson = (person) => {
+    if (window.confirm('Delete ', person.name, '?')) {
+      personService.remove(person.id)
+      setPersons(persons.filter(person2 => person2.id !== person.id))
+    }
   }
 
   const addPerson = (event) => {
@@ -99,7 +101,7 @@ const ShowNumbers = (props) => {
     return (
       <div>
         {props.personsToShow.map((person) =>
-          <Person key={person.id} person={person} remove={props.removePerson} /> 
+          <Person key={person.id} person={person} removePerson={props.removePerson} /> 
         )}
       </div>
     )
