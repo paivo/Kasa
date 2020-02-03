@@ -28,7 +28,8 @@ const App = () => {
         event.preventDefault()
         const personObject = {
             name: newName,
-            number: newNumber
+            number: newNumber,
+            id: persons.length + 1
         }
         setPersons(persons.concat(personObject))
         setNewName('')
