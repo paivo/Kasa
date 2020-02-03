@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Person from './components/Person'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -9,15 +9,17 @@ const App = () => {
   const [newFilter, setNewFilter] = useState('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    personService
+    .getAll()
+    .then(response => {
+      setPersons(response.data)
       })
   }, [])
-  console.log('render', persons.length, 'persons')
+
+  const removePerson = (id) => {
+    personService.remove(id)
+    setPersons(persons.filter(person => person.id !== id))
+  }
 
   const addPerson = (event) => {
     var names = persons.map((person) => person.name)
@@ -29,11 +31,18 @@ const App = () => {
         const personObject = {
             name: newName,
             number: newNumber,
-            id: persons.length + 1
         }
         setPersons(persons.concat(personObject))
         setNewName('')
         setNewNumber('')
+
+        personService
+          .create(personObject)
+          .then(response => {
+            setPersons(persons.concat(response.data))
+            setNewName('')
+            setNewNumber('')
+          })
     } 
   }
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()))
@@ -60,7 +69,7 @@ const App = () => {
       <h2>add a new</h2>
       <AddPersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <ShowNumbers personsToShow={personsToShow}/>
+      <ShowNumbers personsToShow={personsToShow} removePerson={removePerson}/>
     </div>
   )
 
@@ -89,8 +98,8 @@ const AddPersonForm = (props) => {
 const ShowNumbers = (props) => {
     return (
       <div>
-        {props.personsToShow.map((person, i) =>
-          <Person key={i} person={person} /> 
+        {props.personsToShow.map((person) =>
+          <Person key={person.id} person={person} remove={props.removePerson} /> 
         )}
       </div>
     )
