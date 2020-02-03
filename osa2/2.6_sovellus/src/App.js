@@ -7,6 +7,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+
 
   useEffect(() => {
     personService
@@ -20,6 +22,12 @@ const App = () => {
     if (window.confirm(`Delete ${person.name} ?`)) {
       personService.remove(person.id)
       setPersons(persons.filter(person2 => person2.id !== person.id))
+      setErrorMessage(
+        `Removed ${person.name}`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)  
     }
   }
 
@@ -30,6 +38,12 @@ const App = () => {
     personService.update(id, changedPerson).then(response => {
       setPersons(persons.map(pers => pers.id !== id ? pers : response.data))
     })
+    setErrorMessage(
+      `Changed ${person.name}s number`
+    )
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 5000)  
   }
 
   const addPerson = (event) => {
@@ -57,7 +71,13 @@ const App = () => {
             setNewName('')
             setNewNumber('')
           })
-    } 
+        setErrorMessage(
+          `Added ${newName}`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)          
+    }
   }
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()))
 
@@ -76,9 +96,21 @@ const App = () => {
     setNewFilter(event.target.value)
   }
 
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+    return (
+      <div className="error">
+        {message}
+      </div>
+    )
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter newFilter={newFilter} handleFilterChange={handleFilterChange} />
       <h2>add a new</h2>
       <AddPersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
