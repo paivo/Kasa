@@ -1,24 +1,9 @@
 {
   "persons": [
     {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
       "name": "jhgjhgjh",
       "number": "654",
       "id": 18
-    },
-    {
-      "name": "lklöl",
-      "number": "765",
-      "id": 19
-    },
-    {
-      "name": "jhlkjhlkjh",
-      "number": "657765",
-      "id": 20
     },
     {
       "name": "liuliklk",
@@ -26,14 +11,14 @@
       "id": 21
     },
     {
-      "name": "lkjlkj",
-      "number": "876876",
-      "id": 22
+      "name": "hj",
+      "number": "2222",
+      "id": 25
     },
     {
-      "name": "hgkkjh",
-      "number": "87687",
-      "id": 23
+      "name": "kuki",
+      "number": "666",
+      "id": 26
     }
   ]
 }

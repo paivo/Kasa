@@ -17,17 +17,30 @@ const App = () => {
   }, [])
 
   const removePerson = (person) => {
-    if (window.confirm('Delete ', person.name, '?')) {
+    if (window.confirm(`Delete ${person.name} ?`)) {
       personService.remove(person.id)
       setPersons(persons.filter(person2 => person2.id !== person.id))
     }
   }
 
+  const changeNumber = (id, changedNumber) => {
+    const person = persons.find(n => n.id === id)
+    const changedPerson = { ...person, number: changedNumber }
+    console.log(changedPerson)
+    personService.update(id, changedPerson).then(response => {
+      setPersons(persons.map(pers => pers.id !== id ? pers : response.data))
+    })
+  }
+
   const addPerson = (event) => {
     var names = persons.map((person) => person.name)
     if (names.includes(newName)) {
-        window.alert(`${newName} is already added to phonebook`)
-        event.preventDefault()
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const currentId = persons.find(n => n.name === newName).id
+        changeNumber(currentId, newNumber)
+      } else {
+          event.preventDefault()
+      }
     } else {
         event.preventDefault()
         const personObject = {
@@ -37,7 +50,6 @@ const App = () => {
         setPersons(persons.concat(personObject))
         setNewName('')
         setNewNumber('')
-
         personService
           .create(personObject)
           .then(response => {
