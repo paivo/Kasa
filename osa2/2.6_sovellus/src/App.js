@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Person from './components/Person'
 import personService from './services/persons'
 
 const App = () => {
@@ -150,5 +149,17 @@ const ShowNumbers = (props) => {
       </div>
     )
 }
+
+const Person = ( {person, removePerson} ) => {
+  return (
+    <div>
+      {person.name} {person.number} 
+      <button onClick={() => removePerson(person)}>
+        delete
+      </button>
+    </div>
+  )
+}
+
 
 export default App
